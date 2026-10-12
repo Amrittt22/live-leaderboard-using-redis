@@ -6,6 +6,7 @@ const path = require("path");
 
 const app = express();
 const port = Number(process.env.PORT || 3000);
+const host = process.env.HOST || "127.0.0.1";
 if (!Number.isInteger(port) || port < 1 || port > 65535) {
   throw new Error("PORT must be an integer between 1 and 65535");
 }
@@ -118,8 +119,8 @@ app.use((err, _req, res, _next) => {
 });
 
 async function start() {
-  const server = app.listen(port, () => {
-    console.log(`Leaderboard API listening on port ${port}`);
+  const server = app.listen(port, host, () => {
+    console.log(`Leaderboard API listening at http://${host}:${port}`);
   });
 
   redis.connect().catch((error) => {

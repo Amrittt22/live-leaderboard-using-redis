@@ -10,20 +10,36 @@ A small Redis-backed leaderboard with a browser frontend and JSON API. The front
 - Increments a post's view counter.
 - Shows clear feedback for invalid input, missing users, and server errors.
 
-## Requirements
+## Run locally with Docker
 
-- Node.js 18 or newer
-- Redis 6 or newer, running locally or remotely
+Install Docker Desktop (with Docker Compose), then clone and start the app and Redis together:
 
-## Run locally
+```sh
+git clone https://github.com/Amrittt22/live-leaderboard-using-redis.git
+cd live-leaderboard-using-redis
+docker compose up --build
+```
 
-Install dependencies:
+Open <http://localhost:3000/>. The compose setup binds the app to your own computer only and keeps Redis data in a Docker volume. Stop the app with `Ctrl+C`; use `docker compose down` to stop and remove the containers while keeping stored Redis data.
+
+If port `3000` is already in use, set a different host port before starting:
+
+```powershell
+$env:HOST_PORT = "3001"
+docker compose up --build
+```
+
+On macOS or Linux, use `HOST_PORT=3001 docker compose up --build`.
+
+## Run with Node.js and local Redis
+
+Alternatively, install Node.js 18 or newer and Redis 6 or newer, then install the app dependencies:
 
 ```sh
 npm install
 ```
 
-Set these environment variables if you need to override the defaults:
+Set these environment variables to override the defaults:
 
 | Variable | Default | Purpose |
 | --- | --- | --- |
@@ -32,7 +48,7 @@ Set these environment variables if you need to override the defaults:
 | `REDIS_LEADERBOARD_KEY` | `leaderboard:users` | Sorted set for user scores |
 | `REDIS_VIEWS_KEY_PREFIX` | `post:views:` | Prefix for post view counters |
 
-Start the app in development or production mode:
+Start the app:
 
 ```sh
 npm run dev
@@ -40,7 +56,7 @@ npm run dev
 npm start
 ```
 
-Open <http://localhost:3000/> for the frontend. Ensure Redis is reachable at `REDIS_URL` first. When Redis is unavailable, the web page can load, while API operations respond with `503 Service Unavailable`.
+By default the Node.js server listens on `127.0.0.1:3000`, so it is reachable only from the local computer. Ensure Redis is reachable at `REDIS_URL`. When Redis is unavailable, the web page can load, while API operations respond with `503 Service Unavailable`.
 
 ## API
 
