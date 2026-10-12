@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f4f6fb" />
+    <title>Live Leaderboard</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="page-shell">
+      <header class="topbar">
+        <a class="brand" href="/" aria-label="Liveboard home">
+          <span class="brand-mark" aria-hidden="true">L</span>
+          <span>liveboard</span>
+        </a>
+        <span class="live-status"><span class="status-dot"></span> Live rankings</span>
+      </header>
+
+      <section class="intro">
+        <p class="eyebrow">THE COMMUNITY SCOREBOARD</p>
+        <h1>Every point<br /><span>counts.</span></h1>
+        <p class="intro-copy">See who's climbing the leaderboard. Add points and watch the rankings move.</p>
+      </section>
+
+      <section class="content-grid" aria-label="Leaderboard and API features">
+        <article class="leaderboard-card">
+          <div class="card-heading">
+            <div>
+              <p class="eyebrow">CURRENT STANDINGS</p>
+              <h2>Top players</h2>
+            </div>
+            <button class="icon-button" id="refresh" type="button" aria-label="Refresh leaderboard" title="Refresh">↻</button>
+          </div>
+          <div class="table-head"><span>RANK / PLAYER</span><span>POINTS</span></div>
+          <ol class="player-list" id="players" aria-live="polite"></ol>
+          <p class="updated" id="updated">Connecting to leaderboard…</p>
+        </article>
+
+        <aside class="side-column">
+          <article class="form-card">
+            <div class="card-heading compact">
+              <div>
+                <p class="eyebrow">MAKE YOUR MOVE</p>
+                <h2>Add points</h2>
+              </div>
+              <span class="sparkle" aria-hidden="true">✳</span>
+            </div>
+            <p class="form-copy">Give a player a boost. Their new score appears in the rankings right away.</p>
+            <form id="points-form">
+              <label for="userId">Player name</label>
+              <input id="userId" name="userId" type="text" maxlength="200" placeholder="e.g. alex" autocomplete="off" required />
+              <label for="points">Points to add</label>
+              <input id="points" name="points" type="number" min="1" step="1" value="10" required />
+              <button class="submit-button" type="submit"><span>Add points</span><span aria-hidden="true">↗</span></button>
+              <p class="form-message" id="form-message" role="status"></p>
+            </form>
+          </article>
+          <article class="form-card">
+            <div class="card-heading compact">
+              <div>
+                <p class="eyebrow">POST ANALYTICS</p>
+                <h2>Record a view</h2>
+              </div>
+              <span class="sparkle" aria-hidden="true">◉</span>
+            </div>
+            <p class="form-copy">Increment a post's view counter by one.</p>
+            <form id="views-form">
+              <label for="postId">Post ID</label>
+              <input id="postId" name="postId" type="text" maxlength="200" placeholder="e.g. article-42" autocomplete="off" required />
+              <button class="submit-button" type="submit"><span>Record view</span><span aria-hidden="true">↗</span></button>
+              <p class="form-message" id="views-message" role="status"></p>
+            </form>
+          </article>
+          <article class="form-card">
+            <div class="card-heading compact">
+              <div>
+                <p class="eyebrow">PLAYER STATS</p>
+                <h2>Find a rank</h2>
+              </div>
+              <span class="sparkle" aria-hidden="true">#</span>
+            </div>
+            <p class="form-copy">Look up any player's current score and position.</p>
+            <form id="rank-form">
+              <label for="rankUserId">Player name</label>
+              <input id="rankUserId" name="userId" type="text" maxlength="200" placeholder="e.g. alex" autocomplete="off" required />
+              <button class="submit-button" type="submit"><span>Check rank</span><span aria-hidden="true">↗</span></button>
+              <p class="form-message" id="rank-message" role="status"></p>
+            </form>
+          </article>
+          <div class="tip-card"><span class="tip-icon" aria-hidden="true">✦</span><p><strong>Keep climbing</strong><br />Scores are saved and rankings update with every point.</p></div>
+        </aside>
+      </section>
+      <footer>Powered by Redis <span>·</span> Rankings refresh automatically</footer>
+    </main>
+    <script src="/app.js" defer></script>
+  </body>
+</html>
